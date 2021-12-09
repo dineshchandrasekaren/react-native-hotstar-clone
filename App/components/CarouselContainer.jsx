@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import CarouselItem from "./Carousel";
 import styled from "styled-components";
 import dimension from "../config/dimension";
+
 const CarouselContainer = (props) => {
   const [carouselItems, setCarouselItems] = useState(props.carouselData);
   return (
@@ -10,8 +11,11 @@ const CarouselContainer = (props) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {carouselItems.map((item, index) => (
           <CarouselItem
+            gradient={props.gradient}
             small={props.small}
+            long={props.long}
             key={index}
+            title={props.title}
             image={{ uri: item.image }}
           />
         ))}

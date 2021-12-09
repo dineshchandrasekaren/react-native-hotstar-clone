@@ -1,12 +1,17 @@
 import React from "react";
-import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import dimension from "../config/dimension";
 import styled from "styled-components";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 const CarouselItem = ({
-  small,
+  long = false,
+  small = false,
   image,
-  width = small ? 0.5 : 0.88,
-  height = small ? 0.14 : 0.26,
+  width = small ? 0.5 : long ? 0.34 : 0.88,
+  height = small ? 0.14 : long ? 0.26 : 0.26,
+  gradient,
+  title,
 }) => {
   return (
     <TouchableOpacity>
@@ -15,48 +20,48 @@ const CarouselItem = ({
           width: dimension.width * width,
           height: dimension.height * height,
           backgroundColor: "#b9a9a9",
-          borderRadius: dimension.width * 0.018,
+          borderRadius: 5,
           overflow: "hidden",
           marginLeft: dimension.width * 0.02,
-          zIndex: 10,
         }}
       >
-        <Image source={image} />
+        <Image source={image} resizeMode="cover" />
+        {gradient && (
+          <LinearGradient
+            colors={["transparent", "rgba(0,0,0,0.8)"]}
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              top: "40%",
+            }}
+          >
+            {title && (
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: "49%",
+                  left: "6%",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Ionicons
+                  name="play"
+                  color="#fff"
+                  size={17}
+                  style={{ paddingRight: 5 }}
+                />
+                <Text style={{ color: "#fff", fontSize: 17 }}>{title}</Text>
+              </View>
+            )}
+          </LinearGradient>
+        )}
       </View>
     </TouchableOpacity>
   );
 };
-
-// const styles = StyleSheet.create({
-//     container: {
-//         width: width*0.9,
-//         height: 200,
-//           borderRadius: 5,
-//   overflow: "hidden",
-//   marginLeft: 15,
-//     }
-// })
-
-// const Container = styled.View`
-//   width: ${dimension.width * 0.88}px;
-//   height: ${dimension.height * 0.26}px;
-//   background-color: #b9a9a9;
-//   border-radius: ${dimension.width * 0.018}px;
-//   overflow: hidden;
-//   display: flex;
-//   justify-content: center;
-//   margin-left: ${dimension.width * 0.04}px;
-// `;
-// const Container = styled.View`
-//   width: ${dimension.width * 0.6}px;
-//   height: ${dimension.height * 0.17}px;
-//   background-color: #b9a9a9;
-//   border-radius: ${dimension.width * 0.018}px;
-//   overflow: hidden;
-//   display: flex;
-//   justify-content: center;
-//   margin-left: ${dimension.width * 0.04}px;
-// `;
 
 const Image = styled.Image`
   width: 100%;
